@@ -17,5 +17,11 @@ use App\Models\JobPosting;
 // All Job Postings
 Route::get('/', [JobPostingController::class, 'index']);
 
+// Show create form
+Route::get('/jobs/create', [JobPostingController::class, 'create']);
+
+// Store Job post Data
+Route::get('/jobs/store', [JobPostingController::class, 'store']);
+
 // Single Job Post
 Route::get('/jobs/{jobid}', [JobPostingController::class, 'show']);
