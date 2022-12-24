@@ -21,7 +21,16 @@ Route::get('/', [JobPostingController::class, 'index']);
 Route::get('/jobs/create', [JobPostingController::class, 'create']);
 
 // Store Job post Data
-Route::get('/jobs/store', [JobPostingController::class, 'store']);
+Route::post('/jobs/store', [JobPostingController::class, 'store']);
+
+// Show Edit form
+Route::get('/jobs/{jobid}/edit', [JobPostingController::class, 'edit']);
+
+// Update job post data
+Route::put('/jobs/{jobid}', [JobPostingController::class, 'update']);
+
+// Delete job post
+Route::delete('/jobs/{jobid}', [JobPostingController::class, 'destroy']);
 
 // Single Job Post
 Route::get('/jobs/{jobid}', [JobPostingController::class, 'show']);

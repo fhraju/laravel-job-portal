@@ -2,13 +2,14 @@
     <x-card class="p-10 max-w-lg mx-auto mt-24">
         <header class="text-center">
             <h2 class="text-2xl font-bold uppercase mb-1">
-                Create a Job
+                Edit This Job
             </h2>
-            <p class="mb-4">Post a Job to find a developer</p>
+            <p class="mb-4">Edit {{$job->title}}</p>
         </header>
 
-        <form method="POST" action="/jobs/store" enctype="multipart/form-data">
+        <form method="POST" action="/jobs/{{$job->id}}" enctype="multipart/form-data">
             @csrf
+            @method("PUT")
             <div class="mb-6">
                 <label
                     for="company"
@@ -19,7 +20,7 @@
                     type="text"
                     class="border border-gray-200 rounded p-2 w-full"
                     name="company"
-                    value="{{old('company')}}"
+                    value="{{$job->company}}"
                 />
                 
 
@@ -37,7 +38,7 @@
                     class="border border-gray-200 rounded p-2 w-full"
                     name="title"
                     placeholder="Example: Senior Laravel Developer"
-                    value="{{old('title')}}"
+                    value="{{$job->title}}"
                 />
 
                 @error('title')
@@ -56,7 +57,7 @@
                     class="border border-gray-200 rounded p-2 w-full"
                     name="location"
                     placeholder="Example: Remote, Boston MA, etc"
-                    value="{{old('location')}}"
+                    value="{{$job->location}}"
                 />
                 
                 @error('location')
@@ -72,7 +73,7 @@
                     type="text"
                     class="border border-gray-200 rounded p-2 w-full"
                     name="email"
-                    value="{{old('email')}}"
+                    value="{{$job->email}}"
                 />
 
                 @error('email')
@@ -91,7 +92,7 @@
                     type="text"
                     class="border border-gray-200 rounded p-2 w-full"
                     name="website"
-                    value="{{old('website')}}"
+                    value="{{$job->website}}"
                 />
                 
                 @error('website')
@@ -108,7 +109,7 @@
                     class="border border-gray-200 rounded p-2 w-full"
                     name="tags"
                     placeholder="Example: Laravel, Backend, Postgres, etc"
-                    value="{{old('tags')}}"
+                    value="{{$job->tags}}"
                 />
 
                 @error('tags')
@@ -124,6 +125,11 @@
                     type="file"
                     class="border border-gray-200 rounded p-2 w-full"
                     name="logo"
+                />
+                <img
+                class="w-48 mr-6 mb-6"
+                src="{{$job->logo ? asset('storage/' . $job->logo) : asset('images/no-image.png')}}"
+                alt=""
                 />
 
                 @error('logo')
@@ -143,7 +149,7 @@
                     name="description"
                     rows="10"
                     placeholder="Include tasks, requirements, salary, etc">
-                    {{old('description')}}
+                    {{$job->description}}
                 </textarea>
                 
                 @error('description')
@@ -155,7 +161,7 @@
                 <button
                     class="bg-laravel text-white rounded py-2 px-4 hover:bg-black"
                 >
-                    Create Job
+                    Edit Job
                 </button>
 
                 <a href="/" class="text-black ml-4"> Back </a>
