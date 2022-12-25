@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\JobPostingController;
 use Illuminate\Support\Facades\Route;
-use App\Models\JobPosting;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\JobPostingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,19 +18,37 @@ use App\Models\JobPosting;
 Route::get('/', [JobPostingController::class, 'index']);
 
 // Show create form
-Route::get('/jobs/create', [JobPostingController::class, 'create']);
+Route::get('/jobs/create', [JobPostingController::class, 'create'])->middleware('auth');
 
 // Store Job post Data
-Route::post('/jobs/store', [JobPostingController::class, 'store']);
+Route::post('/jobs/store', [JobPostingController::class, 'store'])->middleware('auth');
 
 // Show Edit form
-Route::get('/jobs/{jobid}/edit', [JobPostingController::class, 'edit']);
+Route::get('/jobs/{jobid}/edit', [JobPostingController::class, 'edit'])->middleware('auth');
 
 // Update job post data
-Route::put('/jobs/{jobid}', [JobPostingController::class, 'update']);
+Route::put('/jobs/{jobid}', [JobPostingController::class, 'update'])->middleware('auth');
 
 // Delete job post
-Route::delete('/jobs/{jobid}', [JobPostingController::class, 'destroy']);
+Route::delete('/jobs/{jobid}', [JobPostingController::class, 'destroy'])->middleware('auth');
+
+// Manage Job posts
+Route::get('/jobs/manage', [JobPostingController::class, 'manage'])->middleware('auth');
 
 // Single Job Post
 Route::get('/jobs/{jobid}', [JobPostingController::class, 'show']);
+
+// Show Register Form
+Route::get('/register', [UserController::class, 'create'])->middleware('guest');
+
+// Create New User
+Route::post('/users', [UserController::class, 'store']);
+
+// User Log out
+Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
+
+// Show Login Form
+Route::get('/login', [UserController::class, 'login'])->name('login')->middleware('guest');
+
+// Authenticate the user
+Route::post('/users/authenticate', [UserController::class, 'authenticate']);

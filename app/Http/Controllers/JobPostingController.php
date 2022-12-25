@@ -50,6 +50,8 @@ class JobPostingController extends Controller
         $formFields['logo'] = $request->file('logo')->store('logos', 'public');
        }
 
+       $formFields['user_id'] = auth()->id();
+
        JobPosting::create($formFields);
 
        return redirect('/')->with('message', 'Job Posted Successfully');
@@ -64,6 +66,11 @@ class JobPostingController extends Controller
     // Update Jobpost Data
     public function update(Request $request, JobPosting $jobid)
     {
+        //Make sure Logged in user is the owner of the post
+        if ($jobid->user_id != auth()->id()) {
+            abort(403, "UnAuthorized actions");
+        }
+
         $formFields = $request->validate([
         'title' => 'required',
         'company' => 'required',
@@ -87,7 +94,18 @@ class JobPostingController extends Controller
     // Delete Job Post
     public function destroy(JobPosting $jobid)
     {
+        //Make sure Logged in user is the owner of the post
+        if ($jobid->user_id != auth()->id()) {
+            abort(403, "UnAuthorized actions");
+        }
+
         $jobid->delete();
         return redirect('/')->with('message', 'JobPost Deleted Successfully');
+    }
+
+    // Manage Job Post
+    public function manage()
+    {
+        return view('job_posts.manage', ['job_posts' => auth()->user()->jobPosting()->get()]);
     }
 }

@@ -9,7 +9,7 @@ class JobPosting extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'company', 'location', 'website', 'email', 'tags', 'logo', 'description'];
+    protected $fillable = ['title', 'company', 'location', 'website', 'email', 'tags', 'logo', 'description', 'user_id'];
 
     public function scopeFilter($query, Array $filters)
     {
@@ -24,5 +24,11 @@ class JobPosting extends Model
             ->orwhere('description', 'like', '%' . request('search') . '%')
             ->orwhere('tags', 'like', '%' . request('search') . '%');
        }
+    }
+
+    // Relationships to user
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

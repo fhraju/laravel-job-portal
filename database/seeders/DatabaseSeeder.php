@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\User;
 use App\Models\JobPosting;
 use Illuminate\Database\Seeder;
 
@@ -16,14 +17,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(10)->create();
+        // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $user = User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
+
         JobPosting::create(
             [
+                'user_id' => $user->id,
                 'title' => 'Laravel Senior Developer', 
                 'tags' => 'laravel, javascript',
                 'company' => 'Acme Corp',
@@ -35,6 +38,7 @@ class DatabaseSeeder extends Seeder
         );
         JobPosting::create(
             [
+                'user_id' => $user->id,
                 'title' => 'Full-Stack Engineer',
                 'tags' => 'laravel, backend ,api',
                 'company' => 'Stark Industries',
@@ -46,6 +50,7 @@ class DatabaseSeeder extends Seeder
         );
         JobPosting::create(
             [
+            'user_id' => $user->id,
             'title' => 'Laravel Developer', 
             'tags' => 'laravel, vue, javascript',
             'company' => 'Wayne Enterprises',
@@ -57,6 +62,7 @@ class DatabaseSeeder extends Seeder
         );
         JobPosting::create(
             [
+                'user_id' => $user->id,
                 'title' => 'Backend Developer', 
                 'tags' => 'laravel, php, api',
                 'company' => 'Skynet Systems',

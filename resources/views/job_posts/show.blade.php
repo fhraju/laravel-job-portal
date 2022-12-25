@@ -50,6 +50,8 @@
                 </div>
             </div>
         </x-card>
+
+        @auth
         <x-card class="mt-4 p-2 flex space-x-6">
             <a href="/jobs/{{$job->id}}/edit">
             <i class="fa-solid fa-pencil"></i>Edit
@@ -60,6 +62,8 @@
                 @method("DELETE")
                 <button class="text-red-500"><i class="fa-solid fa-trash"></i>DELETE</button>
             </form>
-        </x-card>
+        </x-card>          
+        @endauth
+        
     </div>
 </x-layout>
